@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container mt-4">
+
+        <header></header>
+
+        <div class="m-1 text-uppercase">Cập nhật danh mục</div>
+        <form class="d-inlineflex flex-column col-lg-6 col-sm-12" id="update">
+            <input class="form-control m-1" type="text" name="name" placeholder="Tên danh mục">
+            <div class="d-flex">
+                <input class="form-control m-1" id="image" type="text" name="image" placeholder="Link ảnh">
+                <label for="image"><img id="forImage" class="m-1" src="" style="height: 120px; width: 120px;"
+                        alt="Ảnh" /></label>
+            </div>
+            <div class="form-control m-1" id="categories">
+
+            </div>
+            <button class="form-control btn btn-primary m-1" onclick="update()">Cập nhật</button>
+        </form>
+    </div>
+</body>
+
+<script>
+
+    // 
+    async function loadCategory() {
+        try {
+
+            const data = await axios.get(`http://localhost:3000/categories/${getParam(window.location.href)._id}`)
+            const product = { ...data.data }
+            const productForm = document.querySelector('form[id="update"]')
+            productForm.querySelector('input[name="name"]').value = product.name
+            productForm.querySelector('input[name="image"]').value = product.image
+            productForm.querySelector('#forImage').src = product.image
+
+            product.products.forEach((category, index) => {
+                const id = category._id.toString()
+                productForm.querySelector('input[id="' + id + '"]').checked = true
+            })
+        } catch (err) {
+
+        }
+    }
+
+    // 
+    async function loadProducts() {
+        try {
+            const products = document.querySelector('#categories')
+            const data = await axios.get('http://localhost:3000/products')
+            let html = data.data.map(category => {
+                return `
+                <div>
+                    <input class="form-check-input m-1" type="checkbox" name="products" value="${category._id}" id="${category._id}">
+                    <label for="${category._id}">${category.name}</label>
+                </div>
+                `
+            })
+            products.innerHTML = "Sản phẩm:" + html.join('')
+            loadCategory()
+        } catch (err) {
+
+        }
+    }
+    loadProducts()
+
+    // 
+    async function update() {
+        try {
+            const form = document.forms[id = "update"]
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault()
+            })
+            const formData = new FormData(form)
+
+            const obj = Object.fromEntries(formData.entries());
+            obj.products = formData.getAll("products");
+
+            await axios.put(`http://localhost:3000/categories/${getParam(window.location.href)._id}`, obj)
+            alert('Cập nhật thành công')
+            window.location.reload()
+        }
+        catch (e) {
+            alert('Cập nhật thất bại')
+        }
+    }
+</script>
+
+<script src="../index.js"></script>
+
+</html>

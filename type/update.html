@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container mt-4">
+
+        <header></header>
+
+        <div class="m-1 text-uppercase">Cập nhật loại sản phẩm</div>
+        <form class="d-inlineflex flex-column col-lg-6 col-sm-12" id="update">
+            <input class="form-control m-1" type="text" name="name" placeholder="Tên loại">
+            <button class="form-control btn btn-primary m-1" onclick="create()">Cập nhật</button>
+        </form>
+    </div>
+</body>
+
+<script src="../index.js"></script>
+
+<script>
+
+    // load type into form
+    async function loadType() {
+        try {
+            const data = await axios.get(`http://localhost:3000/types/${getParam(window.location.href)._id}`)
+            const product = { ...data.data }
+            const form = document.forms[id = "update"]
+            form.querySelector('input[name="name"]').value = product.name
+        } catch (err) {
+
+        }
+    }
+    loadType()
+
+    // 
+    async function create() {
+        try {
+            const form = document.forms[id = "update"]
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault()
+            })
+            const formData = new FormData(form)
+
+            const obj = Object.fromEntries(formData.entries());
+            obj.products = formData.getAll("products")
+
+            await axios.put(`http://localhost:3000/types/${getParam(window.location.href)._id}`, obj)
+            alert('Cập nhật thành công')
+            window.location.reload()
+        }
+        catch (e) {
+            alert('Cập nhật thất bại')
+        }
+    }
+</script>
+
+</html>
