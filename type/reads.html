@@ -36,9 +36,12 @@
         </table>
     </div>
 </body>
+
+<script src="../index.js"></script>
+
 <script>
     const products = document.querySelector('#products')
-    axios.get('http://localhost:3000/types')
+    axios.get(host + '/types')
         .then(data => {
             let html = data.data.map(product => {
                 return `
@@ -64,7 +67,7 @@
             if (!p) {
                 return
             }
-            await axios.delete(`http://localhost:3000/types/${id}`)
+            await axios.delete(host + `/types/${id}`)
             alert('Xóa thành công')
             location.reload()
         }
@@ -73,7 +76,5 @@
         }
     }
 </script>
-
-<script src="../index.js"></script>
 
 </html>

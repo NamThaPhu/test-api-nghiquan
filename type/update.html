@@ -33,7 +33,7 @@
     // load type into form
     async function loadType() {
         try {
-            const data = await axios.get(`http://localhost:3000/types/${getParam(window.location.href)._id}`)
+            const data = await axios.get(host + `/types/${getParam(window.location.href)._id}`)
             const product = { ...data.data }
             const form = document.forms[id = "update"]
             form.querySelector('input[name="name"]').value = product.name
@@ -56,7 +56,7 @@
             const obj = Object.fromEntries(formData.entries());
             obj.products = formData.getAll("products")
 
-            await axios.put(`http://localhost:3000/types/${getParam(window.location.href)._id}`, obj)
+            await axios.put(host + `/types/${getParam(window.location.href)._id}`, obj)
             alert('Cập nhật thành công')
             window.location.reload()
         }

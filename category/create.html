@@ -38,7 +38,7 @@
     async function loadProducts() {
         try {
             const products = document.querySelector('#products')
-            const data = await axios.get('http://localhost:3002/products')
+            const data = await axios.get('/products')
             let html = data.data.map(product => {
                 return `
                 <div>
@@ -65,7 +65,8 @@
             const obj = Object.fromEntries(formData.entries());
             obj.products = formData.getAll("products");
 
-            const data = await axios.post('http://localhost:3000/categories', obj)
+
+            const data = await axios.post(host + '/categories', obj)
             alert('Thêm thành công')
         } catch (e) {
             alert('Thêm thất bại')

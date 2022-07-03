@@ -25,6 +25,8 @@
     </div>
 </body>
 
+<script src="../index.js"></script>
+
 <script>
     async function create() {
         try {
@@ -37,7 +39,7 @@
 
             const obj = Object.fromEntries(formData.entries());
 
-            await axios.post('http://localhost:3000/types', obj)
+            await axios.post(host + '/types', obj)
             alert('Thêm thành công')
         }
         catch (e) {
@@ -45,7 +47,5 @@
         }
     }
 </script>
-
-<script src="../index.js"></script>
 
 </html>

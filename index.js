@@ -73,3 +73,5 @@ function header() {
     `
 }
 header()
+
+var host = 'https://api-nghiquan.herokuapp.com'

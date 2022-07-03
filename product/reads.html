@@ -43,7 +43,7 @@
 
 <script>
     const products = document.querySelector('#products')
-    axios.get('http://localhost:3000/products')
+    axios.get(host + '/products')
         .then(data => {
             let html = data.data.map(product => {
                 return `
@@ -74,7 +74,7 @@
             if (!p) {
                 return
             }
-            await axios.delete(`http://localhost:3000/products/${id}`)
+            await axios.delete(host + `/products/${id}`)
             alert('Xóa thành công')
             location.reload()
         }

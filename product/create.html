@@ -40,12 +40,14 @@
     </div>
 </body>
 
+<script src="../index.js"></script>
+
 <script>
 
     async function loadCategories() {
         try {
             const products = document.querySelector('#categories')
-            const data = await axios.get('http://localhost:3000/categories')
+            const data = await axios.get(host + '/categories')
             let html = data.data.map(category => {
                 return `
                 <div>
@@ -64,7 +66,7 @@
     async function loadTypes() {
         try {
             const products = document.querySelector('#types')
-            const data = await axios.get('http://localhost:3000/types')
+            const data = await axios.get(host + '/types')
             let html = data.data.map(category => {
                 return `
                 <option value="${category._id}">
@@ -96,7 +98,7 @@
             obj.images = formData.getAll("images");
             obj.categories = formData.getAll("categories")
 
-            await axios.post('http://localhost:3000/products', obj)
+            await axios.post(host + '/products', obj)
             alert('Thêm thành công')
         }
         catch (e) {
@@ -104,7 +106,5 @@
         }
     }
 </script>
-
-<script src="../index.js"></script>
 
 </html>
